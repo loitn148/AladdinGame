@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{b89d4641-48aa-41a3-a0d9-b62a52e06d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\GraphicsManager">
+      <UniqueIdentifier>{6d0eab1f-8eb7-40e7-99d2-fc954f09b01d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\InputManager">
+      <UniqueIdentifier>{7d6761f6-97c4-4a8d-9cca-a8f1ece5053f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\SoundManager">
+      <UniqueIdentifier>{a667b32a-7966-4fe8-8dde-f9a1bcd45984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\AnimationManager">
+      <UniqueIdentifier>{95156b3e-76b8-48f1-8711-0eb658486b9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\ObjectManager">
+      <UniqueIdentifier>{73428981-1151-42d3-bd8d-cc9c9ef78d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\TimeManager">
+      <UniqueIdentifier>{a34f6852-0bf6-4f58-ac94-b40034547775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{4c245673-9baf-4996-b2c7-a731b66f4e5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Map">
+      <UniqueIdentifier>{acb76a41-956b-4120-af63-dffce2a37045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Player">
+      <UniqueIdentifier>{ef20c699-f78e-4e19-898c-8cf503fca281}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GraphicsGame.cpp">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame.cpp">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureGame.cpp">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="InputGame.cpp">
+      <Filter>Framework\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Framework\AnimationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeGame.cpp">
+      <Filter>Framework\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="AladdinCharacter.cpp">
+      <Filter>Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GraphicsGame.h">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame.h">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureGame.h">
+      <Filter>Framework\GraphicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="InputGame.h">
+      <Filter>Framework\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Framework\AnimationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeGame.h">
+      <Filter>Framework\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="AladdinCharacter.h">
+      <Filter>Game\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Framework</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
