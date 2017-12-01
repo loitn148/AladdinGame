@@ -11,7 +11,7 @@ Game *myGame = new Game;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	HWND hWnd;
-	if (GenerateWindow(hInstance, nCmdShow, "MyWindow", "MyGame", 600, 400, hWnd))
+	if (GenerateWindow(hInstance, nCmdShow, "MyWindow", "MyGame", WND_WIDTH, WND_HEIGHT, hWnd))
 	{
 		if(myGame->Init(hWnd, hInstance))
 		{
@@ -65,6 +65,7 @@ bool GenerateWindow(HINSTANCE hInstance, int nCmdShow, LPCSTR className, LPCSTR 
 	UpdateWindow(hWnd);
 	return true;
 }
+
 bool GenerateWindow(HINSTANCE hInstance, int nCmdShow, LPCSTR className, LPCSTR windowTitle, int width, int height, HWND& hWnd)
 {
 	return GenerateWindow(hInstance, nCmdShow, className, windowTitle, GetSystemMetrics(SM_CXSCREEN) / 2 - width / 2,

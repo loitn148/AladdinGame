@@ -1,72 +1,81 @@
+#pragma once
+
 #ifndef _ALADDINCHARACTER_H_
 #define _ALADDINCHARACTER_H_
 
-#pragma once
-
-#include "Animation.h"
 #include "InputGame.h"
-#include "GameObject.h"
-#include "Global.h"
 #include "TimeGame.h"
+#include "Apple.h"
 #include <iostream>
 using namespace std;
 
-class AladdinCharacter :public GameObject, public InputGame
+class Apple;
+class Animation;
+
+class AladdinCharacter : public InputGame, public GameObject
 {
 private:
-	static AladdinCharacter* instance;
-	bool isActionDone; //kiem tra hanh dong da thuc hien xong chua
-	HWND hWnd;
-	HINSTANCE hInstance;
+	static AladdinCharacter* _instance;
+	HWND _hWnd;
+	HINSTANCE _hInstance;
 
-	AladdinStatus currentAction;
-	string fileName;
+	AladdinStatus _currentAction;
+	string _fileName;
 
-	int currentIndex;
-	int countIndex;
+	int _currentIndex;
+	int _runCount;
+	int _camY;
 
-	int press_key_run;
-	int press_key_sit;
-	int press_key_lookup;
-	int press_key_d;
+	bool _isPressKeyRight;
+	bool _isPressKeyLeft;
+	bool _isPressKeyDown;
+	bool _isPressKeyUp;
 
-	bool isJumping;
-	bool isFalling;
-	bool isClimbingY;
-	
-	Animation* listAction;
+	bool _isJumping;
+	bool _isFalling;
+	bool _isStoping;
+	bool _isClimbingY;
+	bool _isClimbingX;
+
+	Animation* _listAction;
+	Apple* _myApple;
 public:
 
 	static AladdinCharacter* getInstance();
 	void SetListAction();
 	void Init(HINSTANCE, HWND);
-	void UpdateAction();
-	void UpdatePosition(float);
-	void Draw(float);
-	void Update(float);
-	void OnKeyUp(int);
-	void OnKeyDown(int);
+	void UpdatePosition(float time);
+	void Draw(float time);
+	void Update(float time);
+	void OnKeyUp(int keyCode);
+	void OnKeyDown(int keyCode);
 
 	//hanh dong
 	void Run();
-	void Stop();
+	void StopRun();
+
 	void Stand();
 	void StandAttack();
 	void StandThrow();
+	void LookUp();
+
 	void Sit();
 	void SitAttack();
 	void SitThrow();
+
 	void Jump();
 	void RunJump();
 	void RunJumpAttack();
 	void RunJumpThrow();
 	void Falling();
-	void LookUp();
+
 	void ClimbY();
 	void ClimbX();
 	void ClimbXStop();
 	void ClimbAttack();
 	void ClimbThrow();
+
+	void CreateApple();
 
 	AladdinCharacter();
 	~AladdinCharacter();

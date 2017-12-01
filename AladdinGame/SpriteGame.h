@@ -2,7 +2,7 @@
 #define _SPRITEGAME_H_
 
 #include <d3dx9.h>
-#include "TextureGame.h"
+#include "GraphicsGame.h"
 
 #pragma once
 
@@ -16,10 +16,14 @@ public:
 	bool Init(LPDIRECT3DDEVICE9);
 	void Begin();
 	void End();
-	void Draw(TextureGame, RECT*, D3DXVECTOR3);
+	void Draw(LPDIRECT3DTEXTURE9 texture, RECT* rect, D3DXVECTOR3 center, D3DXVECTOR3 position,
+		D3DXVECTOR2 scale,
+		D3DXVECTOR2 scalingCenter,
+		D3DXVECTOR2 translation = D3DXVECTOR2(0, 0));
 	void ResetTranform();
-	void FlipX(int, int, D3DXVECTOR3);
-	void FlipY(int, int, D3DXVECTOR3);
+	void FlipX(int width, int height, D3DXVECTOR3 position);
+	void FlipY(int width, int height, D3DXVECTOR3 position);
+	LPD3DXSPRITE getSrpite() { return sprite; }
 
 	static SpriteGame* getInstance();
 

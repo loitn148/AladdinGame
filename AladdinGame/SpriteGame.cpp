@@ -15,15 +15,15 @@ SpriteGame::~SpriteGame()
 	}
 }
 
-SpriteGame* SpriteGame::instance = 0;
+SpriteGame* SpriteGame::instance = NULL;
 
 SpriteGame* SpriteGame::getInstance()
 {
-	if (!instance)
+	if (!SpriteGame::instance)
 	{
-		instance = new SpriteGame();
+		SpriteGame::instance = new SpriteGame();
 	}
-	return instance;
+	return SpriteGame::instance;
 }
 
 bool SpriteGame::Init(LPDIRECT3DDEVICE9 device)
@@ -46,20 +46,19 @@ void SpriteGame::End()
 	sprite->End();
 }
 
-void SpriteGame::Draw(TextureGame tex, RECT* rect, D3DXVECTOR3 position)
+
+void SpriteGame::Draw(LPDIRECT3DTEXTURE9 texture, RECT* rect, D3DXVECTOR3 center, D3DXVECTOR3 position, D3DXVECTOR2 scale, D3DXVECTOR2 scalingCenter, D3DXVECTOR2 translation)
 {
-	if (sprite)
-	{
-		sprite->Draw(tex.texture, rect, NULL, &position, D3DCOLOR_ARGB(255, 255, 255, 255));
-	}
+	GraphicsGame::getInstance()->DrawTexture(texture, *rect, center, position, scale, scalingCenter, translation);
 }
+
 
 void SpriteGame::ResetTranform()
 {
 	sprite->SetTransform(&matrix);
 }
 
-void SpriteGame::FlipX(int w, int h, D3DXVECTOR3 position)
+void SpriteGame::FlipX(int width, int height, D3DXVECTOR3 position)
 {
 	sprite->GetTransform(&matrix);
 	D3DXMATRIX matrixFlip;
@@ -68,11 +67,11 @@ void SpriteGame::FlipX(int w, int h, D3DXVECTOR3 position)
 	//lat quanh truc y
 	matrixFlip._11 = -1;
 	//di chuyen ve mot luong bang gap 2 khoang canh tu tam
-	matrixFlip._41 = (position.x + w / 2) * 2;
+	matrixFlip._41 = (position.x + width / 2) * 2;
 	sprite->SetTransform(&( matrix * matrixFlip ));
 }
 
-void SpriteGame::FlipY(int w, int h, D3DXVECTOR3 position)
+void SpriteGame::FlipY(int width, int height, D3DXVECTOR3 position)
 {
 	sprite->GetTransform(&matrix);
 	D3DXMATRIX matrixFlip;
@@ -81,7 +80,7 @@ void SpriteGame::FlipY(int w, int h, D3DXVECTOR3 position)
 	//lat quanh truc y
 	matrixFlip._22 = -1;
 	//di chuyen ve mot luong bang gap 2 khoang canh tu tam
-	matrixFlip._42 = (position.y + h / 2) * 2;
+	matrixFlip._42 = (position.y + height / 2) * 2;
 	sprite->SetTransform(&(matrix * matrixFlip));
 }
 

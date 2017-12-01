@@ -126,28 +126,42 @@
   <ItemGroup>
     <ClCompile Include="AladdinCharacter.cpp" />
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsGame.cpp" />
     <ClCompile Include="InputGame.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="PlaySence.cpp" />
+    <ClCompile Include="SenceManager.cpp" />
     <ClCompile Include="SpriteGame.cpp" />
-    <ClCompile Include="TextureGame.cpp" />
     <ClCompile Include="TimeGame.cpp" />
+    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AladdinCharacter.h" />
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Apple.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="GraphicsGame.h" />
     <ClInclude Include="InputGame.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="PlaySence.h" />
+    <ClInclude Include="Sence.h" />
+    <ClInclude Include="SenceManager.h" />
     <ClInclude Include="SpriteGame.h" />
-    <ClInclude Include="TextureGame.h" />
     <ClInclude Include="TimeGame.h" />
+    <ClInclude Include="Viewport.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,22 +3,26 @@
 
 #include "AladdinCharacter.h"
 #include "Background.h"
+#include "Camera.h"
+#include "Map.h"
+#include "SenceManager.h"
+#include "PlaySence.h"
+#include "Viewport.h"
 
 #pragma once
 
 class Game
 {
 private:
-	HWND hWnd;
-	HINSTANCE hInstance;
-	float currentTime;
+
+	HWND _hWnd;
+	HINSTANCE _hInstance;
+	float _timeLoop;
+
 public:
 	bool Init(HWND hWnd, HINSTANCE hInstance);
 	void Run();
-	void Update();
-	void Draw();
-
-	LPDIRECT3DSURFACE9 backBuffer;
+	void LoadContent();
 
 	Game();
 	~Game();

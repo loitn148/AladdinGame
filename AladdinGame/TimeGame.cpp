@@ -9,15 +9,15 @@ TimeGame::~TimeGame()
 {
 }
 
-TimeGame* TimeGame::instance = 0;
+TimeGame* TimeGame::instance = NULL;
 
 TimeGame* TimeGame::getInstance()
 {
-	if (!instance)
+	if (!TimeGame::instance)
 	{
-		instance = new TimeGame();
+		TimeGame::instance = new TimeGame();
 	}
-	return instance;
+	return TimeGame::instance;
 }
 
 bool TimeGame::Init()

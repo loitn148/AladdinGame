@@ -1,5 +1,43 @@
 ﻿#pragma once
-enum  Direct
+
+//World
+#define WORLD_X 9542 // = map width
+#define WORLD_Y 1720  // = map height
+#define WORLD_BASE_Y 100 //Position of world when aladdin stand
+
+//Map
+#define MAP_WIDTH 9542 //Map width 4771*2
+#define MAP_HEIGHT 1376 //Map height 688*2
+
+//Width, height of Windows
+#define WND_WIDTH 800
+#define WND_HEIGHT 600
+
+//width - height - velocity
+#define ALADDIN_WIDTH 121 //width 55*1.5
+#define ALADDIN_HEIGHT 138 //height 55*2.5
+
+#define VELOCITY_X 200.0f
+#define VELOCITY_Y 200.0f
+
+#define GRAVITY 5.0f
+
+//Apple
+#define APPLE_VX 200.0f
+#define APPLE_VY 200.0f
+
+//Camera
+#define DELTA_CAMERA 5
+
+struct Transform
+{
+	D3DXVECTOR3 _positionInViewport; //pos in view port
+	D3DXVECTOR2 _translation; //pos translation
+	D3DXVECTOR2 _scale; //vector scale
+	D3DXVECTOR2 _scalingCenter; //pos to scale: center of object
+};
+
+enum Direct
 {
 	LEFT = -1,
 	RIGHT = 1
@@ -11,15 +49,10 @@ enum Object
 	APPLE
 };
 
-enum IdObject
-{
-	CHARACTER
-};
-
 enum AladdinStatus
 {
 	RUN = 0,
-	STOP = 1,
+	STOP_RUN = 1,
 	STAND = 2,
 	STAND_ATTACK = 3,
 	STAND_THROW = 4,
@@ -39,8 +72,22 @@ enum AladdinStatus
 	CLIMB_X_STOP = 18
 };
 
-//map
-#define MAP_PATH "Resource/map.png"
+enum KeyPress
+{
+	PressKeyUp,
+	PressKeyDown,
+	PressKeyLeft,
+	PressKeyRight,
+	PressKeyA,
+	PressKeyS,
+	PressKeyD
+};
+
+//-----PATH SOURCE-----//
+
+//map path
+#define MAP_1_PATH "Resource/map/map-part-1.png"
+#define MAP_2_PATH "Resource/map/map-part-2.png"
 
 //path status
 
@@ -64,12 +111,5 @@ enum AladdinStatus
 #define CLIMB_THROW_PATH "Resource/aladdin/dudaynemtao.png"
 #define CLIMB_X_STOP_PATH "Resource/aladdin/dudaydungyen.png"
 
-//width - height - velocity
-#define HEIGHT_ALADDIN 55
-#define WIDTH_ALADDIN 55
-
-#define VELOCITY_X 90.0f
-#define VELOCITY_Y 150.0f
-
-#define ACCELERATOR 10.0f
-#define GRAVITY 5.0f;
+//Apple path 
+#define APPLE_PATH "Resource/item/apple/apple.png"

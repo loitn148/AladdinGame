@@ -1,34 +1,50 @@
+﻿#pragma once
+
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-#include  <d3d9.h>
-#include <cmath>
+#include <d3d9.h>
+#include <d3dx9.h>
 #include "Global.h"
+#include "Viewport.h"
 
-#pragma once
 class GameObject
 {
+protected:
+	Object _id; //Object id
+	float _dx, _dy; //_d = v * t
+	D3DXVECTOR3 _position; //pos in WORLD
+	int _width, _height; //size
+	float _v0, _vx, _vy; //velocity
+	float _ax, _ay; //accelerator
+	Direct _direct; //direct
+	Transform _transform; //vector transform
 public:
-	int id; //id object
-	Object type; //loai object
-	float x; //toa do
-	float y;
-	int width; //kich thuoc
-	int height;
-	float vx; //van toc
-	float vy;
-	float a; //gia toc
-	Direct direct;
+	Object GetId();
+	float GetV0();
+	float GetVx();
+	float GetVy();
+	float GetAx();
+	float GetAy();
+	int GetWidth();
+	int GetHeight();
+	D3DXVECTOR3 GetPosition();
+	D3DXVECTOR3 GetCenterPosition();
 
-	void Create(int, int, int, int);
-	void Create(LPDIRECT3DDEVICE9, int, int, int, int);
-	virtual void Update(float time);
-	virtual void Draw(float time);
+	void SetId(Object obj);
+	void SetPosition(D3DXVECTOR3 position);
+	void SetV0(float v0);
+	void SetVx(float vx);
+	void SetVy(float vy);
+	void SetAx(float ax);
+	void SetAy(float ay);
+
+	void Create(D3DXVECTOR3 position, int width, int height);
+
+	D3DXVECTOR3 GetPositionInViewport();
 
 	GameObject();
 	~GameObject();
-protected:
-	LPDIRECT3DDEVICE9 device;
 };
 
 #endif // !_GAMEOBJECT_H_

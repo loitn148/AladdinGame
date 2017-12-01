@@ -17,7 +17,6 @@ private:
 public:
 	LPDIRECT3DSURFACE9 sufface;
 	void Create(char* fileName, LPDIRECT3DDEVICE9 device);
-	void Draw();
 
 	static Background* getInstance();
 

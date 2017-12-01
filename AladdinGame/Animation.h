@@ -1,7 +1,6 @@
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 
-#include "TextureGame.h"
 #include "SpriteGame.h"
 #include "GraphicsGame.h"
 #include "Global.h"
@@ -11,23 +10,22 @@
 class Animation
 {
 private:
-	TextureGame image;
-	int width;
-	int height;
-	int nFrame; //number frame of iamge
-	float delayTime; // Thoi gian chuyen frame
-	float currentTime; //Thoi gian chay frame: currentTime >= delayTime: chuyen frame
-	int index; //Frame dang hien thi
-	Direct direct;
+	LPDIRECT3DTEXTURE9 _image;
+	int _width, _height;
+	int _nFrame; //number frame of iamge
+	float _deltaTime; // Thoi gian chuyen frame
+	float _totalTime; //Thoi gian chay frame: currentTime >= delayTime: chuyen frame
+	int _index; //Frame dang hien thi
+	Direct _direct;
 public:
-	int Update(float time); //frame tiep theo
-	void Draw(D3DXVECTOR3, Direct, float); //ve frame hien tai
-	void Create(char*, int, int, int, float, Direct);
+	int NextFrame(float time); //frame tiep theo
+	void Draw(D3DXVECTOR3 position, Direct direct, float, D3DXVECTOR2 scale, D3DXVECTOR2 translation); //ve frame hien tai
+	void Create(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct);
 	int GetIndex();
 	void SetIndex(int inx);
 	int GetTotalFrame();
 
-	Animation(char*, int, int, int, float, Direct);
+	Animation(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct);
 	Animation();
 	~Animation();
 };

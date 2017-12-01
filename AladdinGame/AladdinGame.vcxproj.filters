@@ -25,11 +25,38 @@
     <Filter Include="Game">
       <UniqueIdentifier>{4c245673-9baf-4996-b2c7-a731b66f4e5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Map">
-      <UniqueIdentifier>{acb76a41-956b-4120-af63-dffce2a37045}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Player">
       <UniqueIdentifier>{ef20c699-f78e-4e19-898c-8cf503fca281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item">
+      <UniqueIdentifier>{940d737b-d510-452d-aefd-7dcdda766c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemy">
+      <UniqueIdentifier>{41edaf93-7f69-4d79-ace8-179c4bf8633e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item\Apple">
+      <UniqueIdentifier>{63e3a546-acab-4847-9e21-028eae294d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\CameraManager">
+      <UniqueIdentifier>{42646894-6800-44c9-95ad-a7a0ca9855cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\MapManager">
+      <UniqueIdentifier>{acb76a41-956b-4120-af63-dffce2a37045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\MapManager\Background">
+      <UniqueIdentifier>{a9e866e5-e4ae-4e0f-a3de-fb19fb87d3ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\MapManager\Map">
+      <UniqueIdentifier>{b35900d4-e7fd-40d8-bf16-35d4350d811a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\SenceManager">
+      <UniqueIdentifier>{584cd2b7-ca17-44d5-b61c-163189c85327}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\PlaySence">
+      <UniqueIdentifier>{9cbc13f9-2f33-4ef4-9aa5-6b851f436bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Viewport">
+      <UniqueIdentifier>{da20843f-133c-4dba-a237-56f72346ba9e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,23 +66,14 @@
     <ClCompile Include="SpriteGame.cpp">
       <Filter>Framework\GraphicsManager</Filter>
     </ClCompile>
-    <ClCompile Include="TextureGame.cpp">
-      <Filter>Framework\GraphicsManager</Filter>
-    </ClCompile>
     <ClCompile Include="InputGame.cpp">
       <Filter>Framework\InputManager</Filter>
     </ClCompile>
     <ClCompile Include="Animation.cpp">
       <Filter>Framework\AnimationManager</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Framework\ObjectManager</Filter>
-    </ClCompile>
     <ClCompile Include="TimeGame.cpp">
       <Filter>Framework\TimeManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Game\Map</Filter>
     </ClCompile>
     <ClCompile Include="AladdinCharacter.cpp">
       <Filter>Game\Player</Filter>
@@ -64,6 +82,30 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Apple.cpp">
+      <Filter>Game\Item\Apple</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Framework\CameraManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Game\MapManager\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>Framework\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Game\MapManager\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="SenceManager.cpp">
+      <Filter>Framework\SenceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySence.cpp">
+      <Filter>Game\PlaySence</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework\ObjectManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsGame.h">
@@ -72,23 +114,14 @@
     <ClInclude Include="SpriteGame.h">
       <Filter>Framework\GraphicsManager</Filter>
     </ClInclude>
-    <ClInclude Include="TextureGame.h">
-      <Filter>Framework\GraphicsManager</Filter>
-    </ClInclude>
     <ClInclude Include="InputGame.h">
       <Filter>Framework\InputManager</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Framework\AnimationManager</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Framework\ObjectManager</Filter>
-    </ClInclude>
     <ClInclude Include="TimeGame.h">
       <Filter>Framework\TimeManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Game\Map</Filter>
     </ClInclude>
     <ClInclude Include="AladdinCharacter.h">
       <Filter>Game\Player</Filter>
@@ -99,5 +132,35 @@
     <ClInclude Include="Global.h">
       <Filter>Framework</Filter>
     </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Game\Item\Apple</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Framework\CameraManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Game\MapManager\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>Framework\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Game\MapManager\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Sence.h">
+      <Filter>Framework\SenceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="SenceManager.h">
+      <Filter>Framework\SenceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySence.h">
+      <Filter>Game\PlaySence</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework\ObjectManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
