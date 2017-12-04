@@ -58,6 +58,18 @@
     <Filter Include="Framework\Viewport">
       <UniqueIdentifier>{da20843f-133c-4dba-a237-56f72346ba9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Rect">
+      <UniqueIdentifier>{1c0f05fe-9ba3-46b3-965f-5e094135f806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Collision">
+      <UniqueIdentifier>{5bfb3caa-46ca-49cd-bd55-6f9233da0ee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\StaticObject">
+      <UniqueIdentifier>{7f6e342a-7eab-48bf-ae04-27bdb9a0987a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Item\Ground">
+      <UniqueIdentifier>{c0e2e33a-7a31-432c-b4ae-1623e02331dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsGame.cpp">
@@ -105,6 +117,18 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>Framework\Rect</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Framework\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Game\StaticObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Game\Item\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +182,18 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Framework\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Framework\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Framework\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Game\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Game\Item\Ground</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

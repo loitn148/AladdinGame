@@ -5,13 +5,17 @@
 void PlaySence::LoadContent()
 {
 	this->_aladdin = AladdinCharacter::getInstance();
-	_aladdin->Create(D3DXVECTOR3(100, WORLD_BASE_Y + ALADDIN_HEIGHT, 0), ALADDIN_WIDTH, ALADDIN_HEIGHT);
+	_aladdin->Create(D3DXVECTOR3(0, 0, 0), ALADDIN_WIDTH, ALADDIN_HEIGHT_STAND,
+		Rect(0, 0, 0, 0));
 	_aladdin->Init(_hInstance, _hWnd);
 
 	this->_camera = Camera::getInstance();
 	_camera->Create(D3DXVECTOR3(0, WND_HEIGHT, 0), WND_WIDTH, WND_HEIGHT);
 
 	this->_map = new Map();
+
+	this->_staticObj = StaticObject::getInstance();
+	this->_staticObj->CreateGround();
 }
 
 void PlaySence::Update(float time)

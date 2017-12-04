@@ -7,6 +7,8 @@
 #include <d3dx9.h>
 #include "Global.h"
 #include "Viewport.h"
+#include "Rect.h"
+#include "Collision.h"
 
 class GameObject
 {
@@ -19,6 +21,7 @@ protected:
 	float _ax, _ay; //accelerator
 	Direct _direct; //direct
 	Transform _transform; //vector transform
+	Rect _rectBound; //rectangle bound object
 public:
 	Object GetId();
 	float GetV0();
@@ -26,6 +29,7 @@ public:
 	float GetVy();
 	float GetAx();
 	float GetAy();
+	Rect GetRect();
 	int GetWidth();
 	int GetHeight();
 	D3DXVECTOR3 GetPosition();
@@ -38,8 +42,10 @@ public:
 	void SetVy(float vy);
 	void SetAx(float ax);
 	void SetAy(float ay);
+	void SetRect(Rect rect);
+	void UpdateRect();
 
-	void Create(D3DXVECTOR3 position, int width, int height);
+	void Create(D3DXVECTOR3 position, int width, int height, Rect rect);
 
 	D3DXVECTOR3 GetPositionInViewport();
 

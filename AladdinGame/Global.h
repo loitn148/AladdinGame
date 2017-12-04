@@ -3,7 +3,7 @@
 //World
 #define WORLD_X 9542 // = map width
 #define WORLD_Y 1720  // = map height
-#define WORLD_BASE_Y 100 //Position of world when aladdin stand
+#define WORLD_BASE_Y 150 //Position of world when aladdin stand
 
 //Map
 #define MAP_WIDTH 9542 //Map width 4771*2
@@ -14,17 +14,19 @@
 #define WND_HEIGHT 600
 
 //width - height - velocity
-#define ALADDIN_WIDTH 121 //width 55*1.5
-#define ALADDIN_HEIGHT 138 //height 55*2.5
+#define ALADDIN_WIDTH 100 //
+#define ALADDIN_HEIGHT_STAND 138
+#define ALADDIN_HEIGHT_SIT 85
 
-#define VELOCITY_X 200.0f
-#define VELOCITY_Y 200.0f
+#define VELOCITY_X 250.0f
+#define VELOCITY_JUMP_X 700.0f;
+#define VELOCITY_Y 500.0f
 
-#define GRAVITY 5.0f
+#define GRAVITY 20.0f
 
 //Apple
-#define APPLE_VX 200.0f
-#define APPLE_VY 200.0f
+#define APPLE_VX 1000.0f
+#define APPLE_VY 30.0f
 
 //Camera
 #define DELTA_CAMERA 5
@@ -40,13 +42,25 @@ struct Transform
 enum Direct
 {
 	LEFT = -1,
-	RIGHT = 1
+	RIGHT = 1,
+	TOP = -2,
+	BOTTOM = 2,
+	NONE = 0
+};
+
+struct CollisionResult //Ket qua va cham
+{
+	float _entryTime; //Thoi gian de xay ra va cham
+	float _remainingTime; //Thoi gian sau khi va cham
+	bool _isCollision; //Kiem tra co xay ra va cham hay khong?
+	Direct _directCollision; //Huong va cham
 };
 
 enum Object
 {
 	PLAYER,
-	APPLE
+	APPLE,
+	GROUND
 };
 
 enum AladdinStatus
@@ -69,18 +83,22 @@ enum AladdinStatus
 	CLIMB_X = 15,
 	CLIMB_ATTACK = 16,
 	CLIMB_THROW = 17, 
-	CLIMB_X_STOP = 18
+	CLIMB_X_STOP = 18,
+	WAIT1 = 19,
+	WAIT2 = 20,
+	LOOK_UP_ATTACK = 21,
+	PUSH_WALL = 22,
+	ROLLING = 23,
+	RUN_ATTACK = 24,
+	RUN_THROW = 25,
+	DIE = 26,
+	CLIMB_JUMP = 27
+
 };
 
-enum KeyPress
+enum CollisionBox
 {
-	PressKeyUp,
-	PressKeyDown,
-	PressKeyLeft,
-	PressKeyRight,
-	PressKeyA,
-	PressKeyS,
-	PressKeyD
+	BoundingBox,
 };
 
 //-----PATH SOURCE-----//
@@ -91,25 +109,35 @@ enum KeyPress
 
 //path status
 
-#define RUN_PATH "Resource/aladdin/dichuyen.png"
-#define STOP_PATH "Resource/aladdin/dunglai.png"
-#define STAND_PATH "Resource/aladdin/dungyen.png"
-#define STAND_ATTACK_PATH "Resource/aladdin/dungchem.png"
-#define STAND_THROW_PATH "Resource/aladdin/dungnemtao.png"
-#define SIT_PATH "Resource/aladdin/ngoi.png"
-#define SIT_ATTACK_PATH "Resource/aladdin/ngoichem.png"
-#define SIT_THROW_PATH "Resource/aladdin/ngoinemtao.png"
-#define JUMP_PATH "Resource/aladdin/nhay.png"
-#define LOOK_UP_PATH "Resource/aladdin/nhinlen.png"
-#define CLIMB_Y_PATH "Resource/aladdin/leoday.png"
-#define FALLING_PATH "Resource/aladdin/roixuong.png"
-#define RUN_JUMP_PATH "Resource/aladdin/chaynhay.png"
-#define JUMP_THROW_PATH "Resource/aladdin/nhaynemtao.png"
-#define JUMP_ATTACK_PATH "Resource/aladdin/nhaychem.png"
-#define CLIMB_X_PATH "Resource/aladdin/dudaydichuyen.png"
-#define CLIMB_ATTACK_PATH "Resource/aladdin/dudaychem.png"
-#define CLIMB_THROW_PATH "Resource/aladdin/dudaynemtao.png"
-#define CLIMB_X_STOP_PATH "Resource/aladdin/dudaydungyen.png"
+#define RUN_PATH "Resource/aladdin/Run.png"
+#define STOP_PATH "Resource/aladdin/StopRun.png"
+#define STAND_PATH "Resource/aladdin/Stand.png"
+#define STAND_ATTACK_PATH "Resource/aladdin/StandAttack.png"
+#define STAND_THROW_PATH "Resource/aladdin/StandThrow.png"
+#define SIT_PATH "Resource/aladdin/SitDown.png"
+#define SIT_ATTACK_PATH "Resource/aladdin/SitAttack.png"
+#define SIT_THROW_PATH "Resource/aladdin/SitThrow.png"
+#define JUMP_PATH "Resource/aladdin/Jump.png"
+#define LOOK_UP_PATH "Resource/aladdin/LookUp.png"
+#define CLIMB_Y_PATH "Resource/aladdin/ClimbY.png"
+#define FALLING_PATH "Resource/aladdin/Jump.png"
+#define RUN_JUMP_PATH "Resource/aladdin/RunJump.png"
+#define JUMP_THROW_PATH "Resource/aladdin/JumpThrow.png"
+#define JUMP_ATTACK_PATH "Resource/aladdin/JumpAttack.png"
+#define CLIMB_X_PATH "Resource/aladdin/ClimbX.png"
+#define CLIMB_ATTACK_PATH "Resource/aladdin/ClimbAttack.png"
+#define CLIMB_THROW_PATH "Resource/aladdin/ClimbThrow.png"
+#define CLIMB_X_STOP_PATH "Resource/aladdin/ClimbXStop.png"
+#define WAIT1_PATH "Resource/aladdin/Wait1.png"
+#define WAIT2_PATH "Resource/aladdin/Wait2.png"
+#define LOOK_UP_ATTACK_PATH "Resource/aladdin/LookUpAttack.png"
+#define PUSH_WALL_PATH "Resource/aladdin/PushWall.png"
+#define ROLLING_PATH "Resource/aladdin/Rolling.png"
+#define RUN_ATTACK_PATH "Resource/aladdin/RunAttack.png"
+#define RUN_THROW_PATH "Resource/aladdin/RunThrow.png"
+#define DIE_PATH "Resource/aladdin/Die.png"
+#define CLIMB_JUMP_PATH "Resource/aladdin/ClimbJump.png"
 
 //Apple path 
-#define APPLE_PATH "Resource/item/apple/apple.png"
+#define APPLE_PATH "Resource/item/apple/Apple.png"
+#define BUMB_PATH "Resource/item/apple/Bumb.png"

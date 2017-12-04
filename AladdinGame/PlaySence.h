@@ -8,6 +8,7 @@
 #include "Viewport.h"
 #include "TimeGame.h"
 #include "Map.h"
+#include "StaticObject.h"
 
 class PlaySence : public Sence
 {
@@ -18,6 +19,7 @@ private:
 	AladdinCharacter* _aladdin;
 	Camera* _camera;
 	Map* _map;
+	StaticObject* _staticObj;
 public:
 	void LoadContent();
 	void Update(float time);

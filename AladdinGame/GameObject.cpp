@@ -37,6 +37,11 @@ float GameObject::GetAy()
 	return this->_ay;
 }
 
+Rect GameObject::GetRect()
+{
+	return _rectBound;
+}
+
 int GameObject::GetWidth()
 {
 	return this->_width;
@@ -99,7 +104,20 @@ void GameObject::SetAy(float ay)
 	this->_ay = ay;
 }
 
-void GameObject::Create(D3DXVECTOR3 position, int width, int height)
+void GameObject::SetRect(Rect rect)
+{
+	this->_rectBound = rect;
+}
+
+void GameObject::UpdateRect()
+{
+	_rectBound.top = _position.y + _height;
+	_rectBound.left = _position.x - _width / 2;
+	_rectBound.bottom = _rectBound.top - _height;
+	_rectBound.right = _rectBound.left + _width;
+}
+
+void GameObject::Create(D3DXVECTOR3 position, int width, int height, Rect rect)
 {
 	this->_position = position;
 	this->_width = width;
@@ -107,4 +125,5 @@ void GameObject::Create(D3DXVECTOR3 position, int width, int height)
 	this->_vx = 0;
 	this->_vy = 0;
 	this->_direct = RIGHT;
+	this->_rectBound = rect;
 }

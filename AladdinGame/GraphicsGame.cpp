@@ -172,7 +172,7 @@ void GraphicsGame::DrawTexture(LPDIRECT3DTEXTURE9 texture, RECT rect, D3DXVECTOR
 	sprite->Draw(
 		texture,
 		&rect,
-		NULL,
+		&center,
 		&position,
 		D3DCOLOR_XRGB(255, 255, 255));
 	sprite->End();

@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Camera.h"
+#include "Collision.h"
+#include "StaticObject.h"
 
 class Apple : public GameObject
 {
@@ -17,7 +19,8 @@ public:
 	~Apple();
 	bool _isDead;
 protected:
-	Animation* _animation;
+	Animation* _listApple;
+	int _currentState;
 };
 
 #endif // !_APPLE_H_

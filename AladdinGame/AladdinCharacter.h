@@ -7,6 +7,7 @@
 #include "TimeGame.h"
 #include "Apple.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Apple;
@@ -21,6 +22,7 @@ private:
 
 	AladdinStatus _currentAction;
 	string _fileName;
+	CollisionResult _resultCollision;
 
 	int _currentIndex;
 	int _runCount;
@@ -50,14 +52,20 @@ public:
 	void OnKeyUp(int keyCode);
 	void OnKeyDown(int keyCode);
 
+	//Va cham
+	/*CollisionResult AladdinCollision(GameObject* obj, float time);*/
+
 	//hanh dong
 	void Run();
+	void RunAttack();
+	void RunThrow();
 	void StopRun();
 
 	void Stand();
 	void StandAttack();
 	void StandThrow();
 	void LookUp();
+	void LookUpAttack();
 
 	void Sit();
 	void SitAttack();
@@ -74,6 +82,7 @@ public:
 	void ClimbXStop();
 	void ClimbAttack();
 	void ClimbThrow();
+	void ClimbJump();
 
 	void CreateApple();
 
