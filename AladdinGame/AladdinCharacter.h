@@ -23,6 +23,8 @@ private:
 	AladdinStatus _currentAction;
 	string _fileName;
 	CollisionResult _resultCollision;
+	Object _objectCollision;
+	float _standTime;
 
 	int _currentIndex;
 	int _runCount;
@@ -62,8 +64,10 @@ public:
 	void StopRun();
 
 	void Stand();
+	void Wait();
 	void StandAttack();
 	void StandThrow();
+
 	void LookUp();
 	void LookUpAttack();
 

@@ -1,11 +1,60 @@
-﻿  AladdinCharacter.cpp
+﻿  main.cpp
   c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(83): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(88): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(127): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(419): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(756): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(757): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(762): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  PlaySence.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Map.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\game\code\aladdingame\aladdingame\map.cpp(11): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  Game.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Camera.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\game\code\aladdingame\aladdingame\camera.cpp(28): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(42): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(103): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+d:\game\code\aladdingame\aladdingame\camera.cpp(104): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  Apple.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Generating Code...
+  Compiling...
+  Viewport.cpp
+d:\game\code\aladdingame\aladdingame\viewport.cpp(44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\viewport.cpp(45): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  StaticObject.cpp
+d:\game\code\aladdingame\aladdingame\staticobject.cpp(28): warning C4018: '<': signed/unsigned mismatch
+d:\game\code\aladdingame\aladdingame\staticobject.cpp(52): warning C4018: '<': signed/unsigned mismatch
+d:\game\code\aladdingame\aladdingame\staticobject.cpp(79): warning C4018: '<': signed/unsigned mismatch
+  Rope.cpp
+  Ground.cpp
+  GraphicsGame.cpp
+  GameObject.cpp
+d:\game\code\aladdingame\aladdingame\gameobject.cpp(114): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+d:\game\code\aladdingame\aladdingame\gameobject.cpp(115): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+d:\game\code\aladdingame\aladdingame\gameobject.cpp(116): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  CrossBar.cpp
+  Collision.cpp
+d:\game\code\aladdingame\aladdingame\collision.cpp(14): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(15): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(19): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(20): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(25): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(26): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(30): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\collision.cpp(31): warning C4244: '=': conversion from 'LONG' to 'float', possible loss of data
+  Animation.cpp
+  AladdinCharacter.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(77): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(82): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(131): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(487): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(843): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(844): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(846): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\game\code\aladdingame\aladdingame\aladdincharacter.cpp(852): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  Generating Code...
   AladdinGame.vcxproj -> D:\Game\Code\AladdinGame\Debug\AladdinGame.exe
   AladdinGame.vcxproj -> D:\Game\Code\AladdinGame\Debug\AladdinGame.pdb (Partial PDB)

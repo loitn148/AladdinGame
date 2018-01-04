@@ -7,20 +7,22 @@
 
 //Map
 #define MAP_WIDTH 9542 //Map width 4771*2
-#define MAP_HEIGHT 1376 //Map height 688*2
+#define MAP_HEIGHT 1720 //Map height 688*2.5
 
 //Width, height of Windows
 #define WND_WIDTH 800
 #define WND_HEIGHT 600
 
 //width - height - velocity
-#define ALADDIN_WIDTH 100 //
-#define ALADDIN_HEIGHT_STAND 138
-#define ALADDIN_HEIGHT_SIT 85
+#define ALADDIN_WIDTH 20 //
+#define ALADDIN_HEIGHT_STAND 130
+#define ALADDIN_HEIGHT_CLIMB 210
+#define ALADDIN_HEIGHT_SIT 80
 
 #define VELOCITY_X 250.0f
-#define VELOCITY_JUMP_X 700.0f;
+#define VELOCITY_JUMP_X 700.0f
 #define VELOCITY_Y 500.0f
+#define VELOCITY_CLIMB_Y 200.0f
 
 #define GRAVITY 20.0f
 
@@ -52,15 +54,20 @@ struct CollisionResult //Ket qua va cham
 {
 	float _entryTime; //Thoi gian de xay ra va cham
 	float _remainingTime; //Thoi gian sau khi va cham
+	float _exitTime; //Thoi gian ket thuc va cham
 	bool _isCollision; //Kiem tra co xay ra va cham hay khong?
 	Direct _directCollision; //Huong va cham
+	int _indexObject; //Stt cua object trong list
 };
 
 enum Object
 {
 	PLAYER,
 	APPLE,
-	GROUND
+	GROUND,
+	ROPE,
+	CROSSBAR,
+	NONEOBJECT
 };
 
 enum AladdinStatus
@@ -107,6 +114,12 @@ enum CollisionBox
 #define MAP_1_PATH "Resource/map/map-part-1.png"
 #define MAP_2_PATH "Resource/map/map-part-2.png"
 
+//Rope path
+#define ROPE_PATH "Resource/map/Rope.png"
+
+//CrossBar path
+#define CROSSBAR_PATH "Resource/map/Crossbar.png"
+
 //path status
 
 #define RUN_PATH "Resource/aladdin/Run.png"
@@ -120,7 +133,7 @@ enum CollisionBox
 #define JUMP_PATH "Resource/aladdin/Jump.png"
 #define LOOK_UP_PATH "Resource/aladdin/LookUp.png"
 #define CLIMB_Y_PATH "Resource/aladdin/ClimbY.png"
-#define FALLING_PATH "Resource/aladdin/Jump.png"
+#define FALLING_PATH "Resource/aladdin/Falling.png"
 #define RUN_JUMP_PATH "Resource/aladdin/RunJump.png"
 #define JUMP_THROW_PATH "Resource/aladdin/JumpThrow.png"
 #define JUMP_ATTACK_PATH "Resource/aladdin/JumpAttack.png"
@@ -141,3 +154,4 @@ enum CollisionBox
 //Apple path 
 #define APPLE_PATH "Resource/item/apple/Apple.png"
 #define BUMB_PATH "Resource/item/apple/Bumb.png"
+

@@ -39,7 +39,7 @@ float GameObject::GetAy()
 
 Rect GameObject::GetRect()
 {
-	return _rectBound;
+	return this->_rectBound;
 }
 
 int GameObject::GetWidth()
@@ -113,7 +113,7 @@ void GameObject::UpdateRect()
 {
 	_rectBound.top = _position.y + _height;
 	_rectBound.left = _position.x - _width / 2;
-	_rectBound.bottom = _rectBound.top - _height;
+	_rectBound.bottom = _position.y;
 	_rectBound.right = _rectBound.left + _width;
 }
 

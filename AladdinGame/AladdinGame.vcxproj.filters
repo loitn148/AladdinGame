@@ -34,20 +34,11 @@
     <Filter Include="Game\Enemy">
       <UniqueIdentifier>{41edaf93-7f69-4d79-ace8-179c4bf8633e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Item\Apple">
-      <UniqueIdentifier>{63e3a546-acab-4847-9e21-028eae294d37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\CameraManager">
       <UniqueIdentifier>{42646894-6800-44c9-95ad-a7a0ca9855cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\MapManager">
       <UniqueIdentifier>{acb76a41-956b-4120-af63-dffce2a37045}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\MapManager\Background">
-      <UniqueIdentifier>{a9e866e5-e4ae-4e0f-a3de-fb19fb87d3ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\MapManager\Map">
-      <UniqueIdentifier>{b35900d4-e7fd-40d8-bf16-35d4350d811a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\SenceManager">
       <UniqueIdentifier>{584cd2b7-ca17-44d5-b61c-163189c85327}</UniqueIdentifier>
@@ -66,9 +57,6 @@
     </Filter>
     <Filter Include="Game\StaticObject">
       <UniqueIdentifier>{7f6e342a-7eab-48bf-ae04-27bdb9a0987a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Item\Ground">
-      <UniqueIdentifier>{c0e2e33a-7a31-432c-b4ae-1623e02331dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,20 +82,11 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Apple.cpp">
-      <Filter>Game\Item\Apple</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\CameraManager</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Game\MapManager\Background</Filter>
-    </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Game\MapManager\Map</Filter>
     </ClCompile>
     <ClCompile Include="SenceManager.cpp">
       <Filter>Framework\SenceManager</Filter>
@@ -127,8 +106,20 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>Game\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="Rope.cpp">
+      <Filter>Game\MapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Game\MapManager</Filter>
+    </ClCompile>
     <ClCompile Include="Ground.cpp">
-      <Filter>Game\Item\Ground</Filter>
+      <Filter>Game\MapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>Game\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossBar.cpp">
+      <Filter>Game\MapManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,20 +147,11 @@
     <ClInclude Include="Global.h">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Apple.h">
-      <Filter>Game\Item\Apple</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\CameraManager</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Game\MapManager\Background</Filter>
-    </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Game\MapManager\Map</Filter>
     </ClInclude>
     <ClInclude Include="Sence.h">
       <Filter>Framework\SenceManager</Filter>
@@ -192,8 +174,20 @@
     <ClInclude Include="StaticObject.h">
       <Filter>Game\StaticObject</Filter>
     </ClInclude>
+    <ClInclude Include="Rope.h">
+      <Filter>Game\MapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Game\MapManager</Filter>
+    </ClInclude>
     <ClInclude Include="Ground.h">
-      <Filter>Game\Item\Ground</Filter>
+      <Filter>Game\MapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>Game\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossBar.h">
+      <Filter>Game\MapManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,17 +1,17 @@
 #include "Animation.h"
 
 
-Animation::Animation(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct)
-{
-	this->_image = GraphicsGame::getInstance()->loadTexture(fileName, D3DCOLOR_XRGB(0, 0, 0));
-	this->_width = width;
-	this->_height = height;
-	this->_nFrame = nFrame;
-	this->_deltaTime = deltaTime;
-	this->_direct = direct;
-	this->_index = 0;
-	this->_totalTime = 0;
-}
+//Animation::Animation(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct)
+//{
+//	this->_image = GraphicsGame::getInstance()->loadTexture(fileName, D3DCOLOR_XRGB(0, 0, 0));
+//	this->_width = width;
+//	this->_height = height;
+//	this->_nFrame = nFrame;
+//	this->_deltaTime = deltaTime;
+//	this->_direct = direct;
+//	this->_index = 0;
+//	this->_totalTime = 0;
+//}
 
 Animation::Animation()
 {
@@ -21,17 +21,17 @@ Animation::~Animation()
 {
 }
 
-void Animation::Create(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct)
-{
-	this->_image = GraphicsGame::getInstance()->loadTexture(fileName, D3DCOLOR_XRGB(0, 0, 0));
-	this->_width = width;
-	this->_height = height;
-	this->_nFrame = nFrame;
-	this->_deltaTime = deltaTime;
-	this->_direct = direct;
-	this->_index = 0;
-	this->_totalTime = 0;
-}
+//void Animation::Create(char* fileName, int width, int height, int nFrame, float deltaTime, Direct direct)
+//{
+//	this->_image = GraphicsGame::getInstance()->loadTexture(fileName, D3DCOLOR_XRGB(0, 0, 0));
+//	this->_width = width;
+//	this->_height = height;
+//	this->_nFrame = nFrame;
+//	this->_deltaTime = deltaTime;
+//	this->_direct = direct;
+//	this->_index = 0;
+//	this->_totalTime = 0;
+//}
 
 void Animation::Create(char * fileName,int nFrame, std::vector<Rect> rect, float timeFrame, Direct direct)
 {
@@ -57,13 +57,6 @@ int Animation::NextFrame(float time)
 
 void Animation::Draw(D3DXVECTOR3 position, Direct d, float time, D3DXVECTOR2 scale, D3DXVECTOR2 translation)
 {
-	/*int widthFrame = _width / _nFrame;
-	RECT rect;
-	rect.top = 0;
-	rect.bottom = _height;
-	rect.left = _index * widthFrame;
-	rect.right = rect.left + widthFrame;*/
-
 	if (d == _direct)
 	{
 		SpriteGame::getInstance()->Draw(_image, &(_rectSprite.at(_index)), _rectSprite.at(_index).GetCenter(), position, scale, D3DXVECTOR2(position.x, position.y), translation);

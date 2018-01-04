@@ -83,6 +83,6 @@ void Apple::Draw(float time)
 		D3DXVECTOR3 cameraPosition = Viewport::getInstance()->getViewPortPositon(Camera::getInstance()->GetPosition());
 		this->_transform._translation = D3DXVECTOR2(-cameraPosition.x, -cameraPosition.y);
 
-		_listApple[_currentState].Draw(this->_transform._positionInViewport, _direct, time, D3DXVECTOR2(1.5, 1.5), _transform._translation);
+		_listApple[_currentState].Draw(this->_transform._positionInViewport, _direct, time, D3DXVECTOR2(2, 2), _transform._translation);
 	}
 }

@@ -28,9 +28,11 @@ void AladdinCharacter::Init(HINSTANCE hInstance, HWND hWnd)
 	this->_currentAction = STAND;
 	this->_direct = RIGHT;
 	this->_position = D3DXVECTOR3(100, WORLD_BASE_Y, 0);
-	this->_rectBound = GetRect();
 	this->_vx = this->_vy = 0;
 	this->_ax = this->_ay = 0;
+	this->_objectCollision = NONEOBJECT;
+	this->_resultCollision._isCollision = false;
+	this->UpdateRect();
 
 	this->_isFalling = false;
 	this->_isJumping = false;
@@ -63,14 +65,6 @@ void AladdinCharacter::UpdatePosition(float time)
 	this->_position.y += this->_dy;
 }
 
-//CollisionResult AladdinCharacter::AladdinCollision(GameObject * obj, float time)
-//{
-//	CollisionResult result;
-//
-//	result = Collision::SweptAABB(obj->GetRect(), D3DXVECTOR2(obj->GetVx(), obj->GetVy()),
-//		this->_rectBound, D3DXVECTOR2(this->GetVx(), this->GetVy()), time);
-//}
-
 void AladdinCharacter::Update(float time)
 {
 	this->ProcessKeyBoard(_hWnd);
@@ -83,9 +77,9 @@ void AladdinCharacter::Update(float time)
 		this->_position.x = WORLD_X - this->_width;
 
 	if (this->_position.y  <= WORLD_BASE_Y)
-	this->_position.y = WORLD_BASE_Y;
+		this->_position.y = WORLD_BASE_Y;
 	if (this->_position.y + this->_height >= WORLD_Y)
-	this->_position.y = WORLD_Y - this->_height;
+		this->_position.y = WORLD_Y - this->_height;
 
 	
 
@@ -105,6 +99,16 @@ void AladdinCharacter::Update(float time)
 	switch (this->_currentAction)
 	{
 	case STAND:
+		_standTime += time;
+		if (_standTime >= 3.0f && _listAction[_currentAction].GetIndex() == 2)
+			Wait();
+		break;
+	case WAIT1:
+		_standTime += time;
+		if (_listAction[_currentAction].GetIndex() == 0)
+			_listAction[_currentAction].SetIndex(4);
+		if (_standTime >= 5.0f && _listAction[_currentAction].GetIndex() == (_listAction[_currentAction].GetTotalFrame() - 1))
+			Stand();
 		break;
 	
 	case STAND_THROW:
@@ -127,8 +131,8 @@ void AladdinCharacter::Update(float time)
 			_camY = Camera::getInstance()->GetPosition().y + 30;
 		Camera::getInstance()->SetPositionY(_camY);
 	case SIT:
-		if (_listAction[_currentAction].GetIndex() == (_listAction[_currentAction].GetTotalFrame() - 1))
-			_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetIndex() - 1);
+		if (_listAction[_currentAction].GetIndex() == 0)
+			_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetTotalFrame() - 1);
 		break;
 
 	case LOOK_UP_ATTACK:
@@ -209,14 +213,27 @@ void AladdinCharacter::Update(float time)
 		{
 			CreateApple();
 		}
+	case JUMP_ATTACK:
+		if (_listAction[_currentAction].GetIndex() == (_listAction[_currentAction].GetTotalFrame() - 1))
+		{
+			_currentAction = RUN_JUMP;
+			_listAction[_currentAction].SetIndex(6);
+		}
 	case JUMP:
 		if (_listAction[_currentAction].GetIndex() == 5 && _vy > 0)
 			_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetIndex() - 1);
 	case RUN_JUMP:
-	case JUMP_ATTACK:
 	case FALLING:
+	case CLIMB_JUMP:
 	#pragma region Kiem tra velocity, pos khi jump
 
+		//CLIMB_JUMP
+		if (_currentAction == CLIMB_JUMP && _listAction[_currentAction].GetIndex() == (_listAction[_currentAction].GetTotalFrame() - 1))
+		{
+			_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetIndex() - 1);
+		}
+
+		//ALL
 		if (_isFalling) //Fall down
 		{
 			_ay -= GRAVITY;
@@ -249,13 +266,42 @@ void AladdinCharacter::Update(float time)
 			{
 				_currentAction = RUN;
 				_vy = 0;
+				_ay = 0;
 				_vx = _direct * VELOCITY_X;
-				
 			}
 			else
 			{
 				Stand();
-				
+			}
+		}
+
+		//Kiem tra va cham voi Rope && Crossbar
+		if (_resultCollision._isCollision )
+		{
+			if (_objectCollision == CROSSBAR && _resultCollision._directCollision == BOTTOM)
+				ClimbXStop();
+			else if (_objectCollision == ROPE && 
+				(_resultCollision._directCollision == RIGHT || _resultCollision._directCollision == LEFT))
+			{
+				ClimbY();
+			}
+			_objectCollision = NONEOBJECT;
+			_resultCollision._isCollision = false;
+			break;
+		}
+		else
+		{
+			if (StaticObject::getInstance()->CrossBarCollision(this, time)._isCollision)
+			{
+				_resultCollision = StaticObject::getInstance()->CrossBarCollision(this, time);
+				_vy = _vy*_resultCollision._entryTime;
+				_objectCollision = CROSSBAR;
+			}
+			if (StaticObject::getInstance()->RopeCollision(this, time)._isCollision)
+			{
+				_resultCollision = StaticObject::getInstance()->RopeCollision(this, time);
+				_vx = _vx*((_resultCollision._exitTime - _resultCollision._entryTime)/2);
+				_objectCollision = ROPE;
 			}
 		}
 		
@@ -266,8 +312,21 @@ void AladdinCharacter::Update(float time)
 	#pragma region Kiem tra va cham/leo day Y
 		if (!_isPressKeyDown && !_isPressKeyUp)
 		{
-			_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetIndex() - 1);
+			if (_listAction[_currentAction].GetIndex() != 0)
+				_listAction[_currentAction].SetIndex(_listAction[_currentAction].GetIndex() - 1);
+		}
+
+		//Kiem tra aladdin da tut ra khoi rope
+		//bottom
+		if ((_position.y + ALADDIN_HEIGHT_CLIMB/2)< StaticObject::getInstance()->GetRope().at(_resultCollision._indexObject).GetPosition().y)
+		{
+			Falling();
+		}
+		//top
+		if (_position.y + ALADDIN_HEIGHT_CLIMB > StaticObject::getInstance()->GetRope().at(_resultCollision._indexObject).GetRect().top)
+		{
 			_vy = 0;
+			_ay = 0;
 		}
 		break;
 	#pragma endregion
@@ -276,8 +335,12 @@ void AladdinCharacter::Update(float time)
 	case CLIMB_X_STOP:
 		break;
 
-	case CLIMB_ATTACK:
 	case CLIMB_THROW:
+		if (_listAction[_currentAction].GetIndex() == 3)
+		{
+			CreateApple();
+		}
+	case CLIMB_ATTACK:
 	#pragma region Hoan thanh state chem/nem tao
 
 		if (_listAction[_currentAction].GetIndex() == (_listAction[_currentAction].GetTotalFrame() - 1))
@@ -308,6 +371,7 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 		if (_currentAction == CLIMB_Y || _currentAction == CLIMB_ATTACK || _currentAction == CLIMB_THROW)
 		{
 			_vy = 0;
+			_ay = 0;
 			break;
 		}
 		else if (_currentAction == SIT)
@@ -321,6 +385,7 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 		if (_currentAction == CLIMB_Y || _currentAction == CLIMB_ATTACK || _currentAction == CLIMB_THROW) 
 		{
 			_vy = 0;
+			_ay = 0;
 			break;
 		}
 		else if (_currentAction == LOOK_UP)
@@ -339,6 +404,8 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 			|| _currentAction == JUMP_ATTACK || _currentAction == JUMP_THROW || _currentAction == FALLING)
 		{
 			_vx = 0;
+			_vy = 0;
+			_isFalling;
 			break;
 		}
 		else if ((_currentAction == RUN || _currentAction == RUN_ATTACK || _currentAction == RUN_THROW) 
@@ -347,7 +414,6 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 			if (_runCount >= 50)
 			{
 				StopRun();
-				_runCount = 0;
 			}
 			else
 				Stand();
@@ -365,6 +431,8 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 			|| _currentAction == JUMP_ATTACK || _currentAction == JUMP_THROW || _currentAction == FALLING)
 		{
 			_vx = 0;
+			_vy = 0;
+			_isFalling;
 			break;
 		}
 		else if (_currentAction == RUN && !_isPressKeyRight)
@@ -372,7 +440,6 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 			if (_runCount >= 50)
 			{
 				StopRun();
-				_runCount = 0;
 			}
 			else
 				Stand();
@@ -390,19 +457,20 @@ void AladdinCharacter::OnKeyUp(int keyCode)
 }
 
 void AladdinCharacter::OnKeyDown(int keyCode){
+
 	switch (keyCode)
 	{
 	case DIK_DOWN:
 		_isPressKeyDown = 1;
 		if (_currentAction == CLIMB_Y) {
-			_vy = -VELOCITY_Y;
+			_vy = -VELOCITY_CLIMB_Y;
 			break;
 		}
 		else if (_currentAction == CLIMB_X || _currentAction == CLIMB_X_STOP) {
 			Falling();
 			break;
 		}
-		else if (_currentAction == STAND)
+		else if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			Sit();
 			break;
@@ -411,10 +479,10 @@ void AladdinCharacter::OnKeyDown(int keyCode){
 	case DIK_UP:
 		_isPressKeyUp = 1;
 		if (_currentAction == CLIMB_Y) {
-			_vy = VELOCITY_Y;
+			_vy = VELOCITY_CLIMB_Y;
 			break;
 		}
-		else if (_currentAction == STAND)
+		else if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			_camY = Camera::getInstance()->GetPosition().y;
 			LookUp();
@@ -432,7 +500,7 @@ void AladdinCharacter::OnKeyDown(int keyCode){
 			ClimbX();
 			break;
 		}
-		else if (_currentAction == STAND)
+		else if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			Run();
 			break;
@@ -448,14 +516,14 @@ void AladdinCharacter::OnKeyDown(int keyCode){
 			ClimbX();
 			break;
 		}
-		else if (_currentAction == STAND)
+		else if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			Run();
 			break;
 		}
 		break;
 	case DIK_D:
-		if (_currentAction == STAND)
+		if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			Jump();
 			break;
@@ -489,7 +557,7 @@ void AladdinCharacter::OnKeyDown(int keyCode){
 		{
 			RunJumpAttack();
 		}
-		else if (_currentAction == STAND)
+		else if (_currentAction == STAND || _currentAction == WAIT1)
 		{
 			StandAttack();
 		}
@@ -515,7 +583,7 @@ void AladdinCharacter::OnKeyDown(int keyCode){
 		{
 			RunJumpThrow();
 		}
-		else if(_currentAction == STAND)
+		else if(_currentAction == STAND || _currentAction == WAIT1)
 		{
 			StandThrow();
 		}
@@ -570,6 +638,7 @@ void AladdinCharacter::StopRun()
 	_isClimbingX = false;
 	_isClimbingY = false;
 
+	_runCount = 0;
 	_currentAction = STOP_RUN;
 	_listAction[_currentAction].SetIndex(0);
 }
@@ -585,7 +654,16 @@ void AladdinCharacter::Stand()
 	_isClimbingY = false;
 	_isStoping = false;
 
+	_standTime = 0;
+	_runCount = 0;
 	_currentAction = STAND;
+	_listAction[_currentAction].SetIndex(0);
+}
+
+void AladdinCharacter::Wait()
+{
+	_standTime = 0;
+	_currentAction = WAIT1;
 	_listAction[_currentAction].SetIndex(0);
 }
 
@@ -690,7 +768,8 @@ void AladdinCharacter::ClimbY()
 	_isClimbingY = true; //
 	_isStoping = false;
 
-	_v0 = 0;
+	_vy = 0;
+	_ay = 0;
 	_vx = 0;
 
 	_currentAction = CLIMB_Y;
@@ -721,6 +800,7 @@ void AladdinCharacter::ClimbXStop()
 	_isStoping = false;
 
 	_vy = 0;
+	_ay = 0;
 	_vx = 0;
 
 	_currentAction = CLIMB_X_STOP;
@@ -741,6 +821,13 @@ void AladdinCharacter::ClimbThrow()
 
 void AladdinCharacter::ClimbJump()
 {
+	_isFalling = false;
+	_isJumping = true;
+	_isClimbingX = false;
+	_isClimbingY = false;
+	_isStoping = false;
+
+	_vy = VELOCITY_Y;
 	_currentAction = CLIMB_JUMP;
 	_listAction[_currentAction].SetIndex(0);
 }
@@ -755,6 +842,9 @@ void AladdinCharacter::CreateApple()
 	//Toa do ban dau cua apple
 	xApple = this->_position.x;
 	yApple = this->_position.y + this->_height;
+	if(_currentAction == SIT_THROW)
+		yApple = this->_position.y + ALADDIN_HEIGHT_SIT;
+	
 
 	vxApple = _direct*APPLE_VX;
 	vyApple = 0;
@@ -807,47 +897,20 @@ void AladdinCharacter::SetListAction()
 
 
 	//STAND
-	_temp.push_back(Rect(0, 540, 50, 577));
-	_temp.push_back(Rect(55, 256, 102, 297));
-	_temp.push_back(Rect(55, 339, 107, 379));
-	_temp.push_back(Rect(55, 0, 110, 44));
-	_temp.push_back(Rect(146, 171, 197, 212));
-	_temp.push_back(Rect(78, 129, 129, 171));
-	_temp.push_back(Rect(55, 45, 108, 89));
-	_temp.push_back(Rect(109, 297, 161, 337));
-	_temp.push_back(Rect(0, 63, 53, 124));
-	_temp.push_back(Rect(0, 0, 54, 62));
-	_temp.push_back(Rect(0, 297, 53, 338));
-	_temp.push_back(Rect(54, 380, 107, 419));
-	_temp.push_back(Rect(0, 578, 53, 614));
-	_temp.push_back(Rect(103, 256, 156, 296));
-	_temp.push_back(Rect(130, 129, 185, 170));
-	_temp.push_back(Rect(0, 125, 73, 168));
-	_temp.push_back(Rect(0, 169, 77, 211));
-	_temp.push_back(Rect(0, 212, 71, 254));
-	_temp.push_back(Rect(111, 0, 173, 42));
-	_temp.push_back(Rect(128, 214, 182, 255));
-	_temp.push_back(Rect(0, 339, 54, 379));
-	_temp.push_back(Rect(109, 338, 162, 377));
-	_temp.push_back(Rect(51, 538, 104, 574));
-	_temp.push_back(Rect(0, 380, 53, 420));
-	_temp.push_back(Rect(72, 214, 127, 255));
-	_temp.push_back(Rect(130, 418, 193, 456));
-	_temp.push_back(Rect(78, 172, 145, 213));
-	_temp.push_back(Rect(109, 86, 167, 128));
-	_temp.push_back(Rect(0, 501, 49, 539));
-	_temp.push_back(Rect(108, 378, 157, 417));
-	_temp.push_back(Rect(80, 420, 129, 459));
-	_temp.push_back(Rect(122, 460, 183, 498));
-	_temp.push_back(Rect(54, 461, 121, 499));
-	_temp.push_back(Rect(50, 501, 124, 537));
-	_temp.push_back(Rect(0, 421, 79, 460));
-	_temp.push_back(Rect(111, 43, 173, 85));
-	_temp.push_back(Rect(0, 255, 54, 296));
-	_temp.push_back(Rect(54, 298, 108, 338));
-	_temp.push_back(Rect(0, 461, 53, 500));
+	_temp.push_back(Rect(108, 41, 158, 78));
+	_temp.push_back(Rect(0, 175, 47, 216));
+	_temp.push_back(Rect(48, 175, 100, 215));
+	_temp.push_back(Rect(0, 45, 53, 89));
+	_temp.push_back(Rect(108, 0, 160, 40));
+	_temp.push_back(Rect(0, 133, 51, 174));
+	_temp.push_back(Rect(54, 45, 105, 87));
+	_temp.push_back(Rect(54, 0, 107, 44));
+	_temp.push_back(Rect(0, 90, 51, 132));
+	_temp.push_back(Rect(52, 90, 103, 131));
+	_temp.push_back(Rect(52, 132, 104, 172));
+	_temp.push_back(Rect(0, 0, 53, 44));
 
-	_listAction[2].Create(STAND_PATH, _temp.size(), _temp, 0.1f, RIGHT);
+	_listAction[2].Create(STAND_PATH, _temp.size(), _temp, 0.15f, RIGHT);
 	_temp.clear();
 
 	//STAND_ATTACK
@@ -858,7 +921,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 0, 52, 82));
 	_temp.push_back(Rect(53, 52, 106, 103));
 
-	_listAction[3].Create(STAND_ATTACK_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[3].Create(STAND_ATTACK_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//STAND_THROW
@@ -871,7 +934,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 139, 58, 176));
 	_temp.push_back(Rect(61, 86, 113, 125));
 
-	_listAction[4].Create(STAND_THROW_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[4].Create(STAND_THROW_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//SIT
@@ -881,7 +944,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 0, 30, 54));
 	_temp.push_back(Rect(0, 55, 35, 108));
 
-	_listAction[5].Create(SIT_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[5].Create(SIT_PATH, _temp.size(), _temp, 0.12f, RIGHT);
 	_temp.clear();
 
 	//SIT ATTACK
@@ -891,7 +954,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 0, 34, 92));
 	_temp.push_back(Rect(35, 0, 68, 84));
 
-	_listAction[6].Create(SIT_ATTACK_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[6].Create(SIT_ATTACK_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//SIT THROW
@@ -903,7 +966,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 0, 37, 82));
 	_temp.push_back(Rect(76, 0, 113, 57));
 
-	_listAction[7].Create(SIT_THROW_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[7].Create(SIT_THROW_PATH, _temp.size(), _temp, 0.08f, RIGHT);
 	_temp.clear();
 
 	//JUMP
@@ -931,7 +994,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 50, 59, 95));
 	_temp.push_back(Rect(0, 0, 58, 49));
 
-	_listAction[9].Create(LOOK_UP_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[9].Create(LOOK_UP_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//CLIMB Y
@@ -947,26 +1010,20 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(63, 0, 144, 28));
 
 
-	_listAction[10].Create(CLIMB_Y_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[10].Create(CLIMB_Y_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//FALLING
-	_temp.push_back(Rect(130, 106, 180, 143));
-	_temp.push_back(Rect(115, 0, 162, 41));
-	_temp.push_back(Rect(0, 60, 44, 119));
-	_temp.push_back(Rect(0, 120, 62, 172));
-	_temp.push_back(Rect(45, 55, 106, 109));
-	_temp.push_back(Rect(45, 0, 114, 54));
-	_temp.push_back(Rect(0, 173, 74, 224));
-	_temp.push_back(Rect(63, 110, 129, 148));
-	_temp.push_back(Rect(75, 187, 138, 223));
-	_temp.push_back(Rect(0, 225, 79, 260));
-	_temp.push_back(Rect(0, 261, 93, 295));
-	_temp.push_back(Rect(107, 55, 192, 105));
+	_temp.push_back(Rect(45, 0, 119, 51));
+	_temp.push_back(Rect(0, 111, 66, 149));
+	_temp.push_back(Rect(0, 188, 63, 224));
+	_temp.push_back(Rect(67, 111, 146, 146));
+	_temp.push_back(Rect(51, 150, 144, 184));
+	_temp.push_back(Rect(0, 60, 85, 110));
 	_temp.push_back(Rect(0, 0, 44, 59));
-	_temp.push_back(Rect(75, 149, 125, 186));
+	_temp.push_back(Rect(0, 150, 50, 187));
 
-	_listAction[11].Create(FALLING_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[11].Create(FALLING_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//RUN JUMP
@@ -1003,7 +1060,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(57, 155, 112, 202));
 	_temp.push_back(Rect(48, 0, 106, 53));
 
-	_listAction[14].Create(JUMP_THROW_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[14].Create(JUMP_ATTACK_PATH, _temp.size(), _temp, 0.07f, RIGHT);
 	_temp.clear();
 
 	//CLIMBX
@@ -1018,7 +1075,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 58, 72, 112));
 	_temp.push_back(Rect(78, 137, 156, 177));
 
-	_listAction[15].Create(CLIMB_X_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[15].Create(CLIMB_X_PATH, _temp.size(), _temp, 0.1f, LEFT);
 	_temp.clear();
 
 	//CLIMB ATTACK
@@ -1031,7 +1088,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 0, 89, 72));
 	_temp.push_back(Rect(92, 154, 179, 202));
 
-	_listAction[16].Create(CLIMB_ATTACK_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[16].Create(CLIMB_ATTACK_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//CLIMB THROW
@@ -1046,36 +1103,53 @@ void AladdinCharacter::SetListAction()
 	_temp.clear();
 
 	//CLIMB X STOP
-	_temp.push_back(Rect(0, 181, 88, 219));
-	_temp.push_back(Rect(0, 140, 88, 180));
-	_temp.push_back(Rect(0, 98, 88, 139));
+	_temp.push_back(Rect(88, 82, 176, 120));
+	_temp.push_back(Rect(89, 0, 177, 40));
+	_temp.push_back(Rect(0, 146, 88, 187));
 	_temp.push_back(Rect(0, 50, 87, 97));
 	_temp.push_back(Rect(0, 0, 88, 49));
+	_temp.push_back(Rect(0, 98, 87, 145));
+	_temp.push_back(Rect(0, 188, 88, 229));
+	_temp.push_back(Rect(89, 41, 177, 81));
 
-	_listAction[18].Create(CLIMB_X_STOP_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[18].Create(CLIMB_X_STOP_PATH, _temp.size(), _temp, 0.15f, RIGHT);
 	_temp.clear();
 
 	//WAIT1 
 	_temp.push_back(Rect(55, 0, 110, 44));
 	_temp.push_back(Rect(0, 63, 53, 124));
 	_temp.push_back(Rect(0, 0, 54, 62));
-	_temp.push_back(Rect(78, 149, 131, 190));
-	_temp.push_back(Rect(126, 207, 179, 246));
-	_temp.push_back(Rect(0, 294, 53, 330));
-	_temp.push_back(Rect(0, 254, 53, 293));
-	_temp.push_back(Rect(133, 126, 186, 166));
-	_temp.push_back(Rect(128, 43, 183, 84));
-	_temp.push_back(Rect(0, 211, 67, 253));
+	_temp.push_back(Rect(134, 169, 187, 210));
+	_temp.push_back(Rect(0, 376, 53, 415));
+	_temp.push_back(Rect(62, 455, 115, 491));
+	_temp.push_back(Rect(55, 254, 108, 294));
+	_temp.push_back(Rect(78, 149, 133, 190));
 	_temp.push_back(Rect(54, 63, 127, 106));
 	_temp.push_back(Rect(0, 125, 77, 167));
 	_temp.push_back(Rect(0, 168, 71, 210));
-	_temp.push_back(Rect(111, 0, 173, 42));
-	_temp.push_back(Rect(78, 107, 132, 148));
-	_temp.push_back(Rect(133, 85, 187, 125));
-	_temp.push_back(Rect(72, 191, 125, 230));
-	_temp.push_back(Rect(132, 167, 185, 206));
+	_temp.push_back(Rect(0, 211, 62, 253));
+	_temp.push_back(Rect(134, 85, 188, 126));
+	_temp.push_back(Rect(126, 211, 180, 251));
+	_temp.push_back(Rect(54, 295, 107, 334));
+	_temp.push_back(Rect(100, 415, 153, 451));
+	_temp.push_back(Rect(0, 295, 53, 335));
+	_temp.push_back(Rect(78, 107, 133, 148));
+	_temp.push_back(Rect(54, 376, 117, 414));
+	_temp.push_back(Rect(128, 43, 195, 84));
+	_temp.push_back(Rect(111, 0, 169, 42));
+	_temp.push_back(Rect(50, 416, 99, 454));
+	_temp.push_back(Rect(109, 294, 158, 333));
+	_temp.push_back(Rect(0, 416, 49, 455));
+	_temp.push_back(Rect(0, 456, 61, 494));
+	_temp.push_back(Rect(80, 335, 147, 373));
+	_temp.push_back(Rect(118, 374, 192, 410));
+	_temp.push_back(Rect(0, 336, 79, 375));
+	_temp.push_back(Rect(63, 211, 125, 253));
+	_temp.push_back(Rect(134, 127, 188, 168));
+	_temp.push_back(Rect(0, 254, 54, 294));
+	_temp.push_back(Rect(109, 254, 162, 293));
 
-	_listAction[19].Create(WAIT1_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[19].Create(WAIT1_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//WAIT2
@@ -1116,7 +1190,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(121, 0, 192, 49));
 	_temp.push_back(Rect(0, 196, 67, 247));
 
-	_listAction[21].Create(LOOK_UP_ATTACK_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[21].Create(LOOK_UP_ATTACK_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 
 	//PUSH_WALL 
@@ -1199,7 +1273,7 @@ void AladdinCharacter::SetListAction()
 	_temp.push_back(Rect(0, 120, 67, 167));
 	_temp.push_back(Rect(0, 168, 75, 213));
 
-	_listAction[27].Create(CLIMB_JUMP_PATH, _temp.size(), _temp, 0.07f, RIGHT);
+	_listAction[27].Create(CLIMB_JUMP_PATH, _temp.size(), _temp, 0.1f, RIGHT);
 	_temp.clear();
 }
 

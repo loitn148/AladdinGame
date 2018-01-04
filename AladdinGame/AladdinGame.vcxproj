@@ -127,9 +127,9 @@
     <ClCompile Include="AladdinCharacter.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Apple.cpp" />
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CrossBar.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsGame.cpp" />
@@ -139,6 +139,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="PlaySence.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Rope.cpp" />
     <ClCompile Include="SenceManager.cpp" />
     <ClCompile Include="SpriteGame.cpp" />
     <ClCompile Include="StaticObject.cpp" />
@@ -149,9 +150,9 @@
     <ClInclude Include="AladdinCharacter.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Apple.h" />
-    <ClInclude Include="Background.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CrossBar.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Global.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="PlaySence.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="Rope.h" />
     <ClInclude Include="Sence.h" />
     <ClInclude Include="SenceManager.h" />
     <ClInclude Include="SpriteGame.h" />

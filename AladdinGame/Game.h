@@ -2,7 +2,6 @@
 #define _GAME_H_
 
 #include "AladdinCharacter.h"
-#include "Background.h"
 #include "Camera.h"
 #include "Map.h"
 #include "SenceManager.h"

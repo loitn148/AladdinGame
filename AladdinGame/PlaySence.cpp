@@ -15,7 +15,7 @@ void PlaySence::LoadContent()
 	this->_map = new Map();
 
 	this->_staticObj = StaticObject::getInstance();
-	this->_staticObj->CreateGround();
+	this->_staticObj->CreateStaticObject();
 }
 
 void PlaySence::Update(float time)
